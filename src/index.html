@@ -239,21 +239,21 @@
 
 <!-- Link to the custom JavaScript file -->
  <script>
-document.addEventListener('alpine:', () => {
-  alpine.data('productApp', () =>({
+document.addEventListener('alpine:init', () => {
+  Alpine.data('productApp', () =>({
     product: [],
     loading: true,
 
     async fetchProducts(){
       try{
-        const response = await fetch('https://fakestoreapi.com/products')
-        const data = await response.json()
-        this.product = data.map(product => ({
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+        this.products = data.map(product => ({
           image: product.image,
           id: product.id,
           title: product.title,
           price: product.price,
-          rating: product.rating,
+          rating: product.rating
         }));
         this.loading = false;
       } catch (error) {
@@ -265,8 +265,8 @@ document.addEventListener('alpine:', () => {
     init(){
       this.fetchProducts();
     }
-  }))
-})
+  }));
+});
 
  </script>
 
