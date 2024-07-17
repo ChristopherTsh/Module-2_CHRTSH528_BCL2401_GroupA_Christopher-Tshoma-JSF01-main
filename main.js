@@ -18,7 +18,8 @@ document.addEventListener('alpine:init', () => {
         } finally {
             this.loading = false;
         }
-    }
+    },
+    
 }));
 
 }

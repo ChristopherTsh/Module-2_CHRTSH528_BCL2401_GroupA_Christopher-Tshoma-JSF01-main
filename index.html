@@ -102,7 +102,12 @@
     >
       <!-- search section-->
       <form>
-        <div class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
+        <div x-data="{search: ' ', product: [],
+        get filterItems(){
+          return this.product.filter(
+            i => i.startsWith(this.search)
+          )
+        }}" x-init="bands = (wait (await fetch('/product')).json())" class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
           <button
             class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200"
           >
@@ -137,7 +142,7 @@
             </ul>
           </div>
           <div class="relative w-full">
-            <input
+            <input x-mosel="search" placeholder="search"
               class="p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             />
             <button
@@ -160,6 +165,9 @@
               </svg>
               <span class="sr-only">Search</span>
             </button>
+            <template x-for="product in filterItems" :key="product.id">
+              <p x-text="product.title"
+            </template>
           </div>
         </div>
       </form>
