@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="https://vitejs.dev/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>SwiftCart</title>
   </head>
 
@@ -176,6 +177,24 @@
         </select>
       </div>
        </div>
+       <!-- card section -->
+       <div class="bg-gray-100 p-6">
+        <div x-data="productApp()" class="container mx-auto ">
+         <div x-show="loading" class="text-center text-xl">Loading</div>
+         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+         <template x-for="product in products" :key="product.id">
+          <div class="flex flex-col items-center justify-center bg-gray-300 rounded dark:bg-gray-700 p-4 hover:shadow-lg transition-shadow">
+            <img :src="product.image" alt="Product Image" class="w-40 h-40 object-cover mb-4 rounded">
+    
+            <h2 class="text-lag font-semibold mb-2" x-text="product.title"></h2> 
+            <p class="text-gray-800 mb-2">Price: R<span x-text="product.price"></span></p>
+            <p class="text-gray-600">Rating:<span x-text="product.rating"></span> </p>
+            <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Add to Cart</button>
+          </div>
+         </template>
+         </div>
+     </div>
+    </div>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
