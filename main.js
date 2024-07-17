@@ -6,6 +6,8 @@ window.Alpine = Alpine
 
 document.addEventListener('alpine:init', () => {
   Alpine.data('productApp', () => ({
+    search: '',
+    filteredProducts: [],
     products: [],
     loading: true,
 
@@ -19,8 +21,17 @@ document.addEventListener('alpine:init', () => {
             this.loading = false;
         }
     },
+    get filterItems(){
+      if(!this.search){
+        return this.products;
+      }
+      return this.products.filter(product =>
+        product.title.toLowerCase().include(this.search.toLowerCase)
+      );
+    }
     
 }));
+    
 
 }
 )
