@@ -15,6 +15,7 @@ document.addEventListener('alpine:init', () => {
         this.loading = true;
         try {
             this.products = await fetchProducts();
+            this.filteredProducts = this.products;
         } catch (error) {
             console.error('Failed to fetch products', error);
         } finally {
@@ -28,7 +29,11 @@ document.addEventListener('alpine:init', () => {
       return this.products.filter(product =>
         product.category.toLowerCase().include(this.search.toLowerCase)
       );
-    }
+    },
+
+    searchProducts() {
+      this.filteredProducts = this.filterItems;
+  }
     
 }));
     
