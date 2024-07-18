@@ -1,50 +1,38 @@
-import './style.css'
-import Alpine from 'alpinejs'
-import { fetchProducts } from './Api.js';
+import './style.css';
+import Alpine from 'alpinejs';
+import { fetchProducts, fetchCategories } from './Api.js';
 
-window.Alpine = Alpine
+window.Alpine = Alpine;
 
 document.addEventListener('alpine:init', () => {
   Alpine.data('productApp', () => ({
-    search: '',
-    filteredProducts: [],
     products: [],
-    loading: true,
-    selectedCategory: '',
+    filteredProducts: [],
     categories: [],
-
-    
+    selectedCategory: '',
+    searchQuery: '',
+    loading: true,
 
     async init() {
-        this.loading = true;
-        try {
-            this.products = await fetchProducts();
-            this.categories = await fetchCategories();
-            this.filteredProducts = this.products;
-        } catch (error) {
-            console.error('Failed to fetch products', error);
-        } finally {
-            this.loading = false;
-        }
-    },
-    get filterItems(){
-      return this.products.filter(product => {
-        const matchesCategory = this.selectedCategory === '' || product.category === this.selectedCategory;
-        const matchesSearch = this.search === '' || product.title.toLowerCase().includes(this.search.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+      this.loading = true;
+      try {
+        this.categories = await fetchCategories();
+        this.products = await fetchProducts();
+        this.filteredProducts = this.products;
+      } catch (error) {
+        console.error('Failed to fetch products', error);
+      } finally {
+        this.loading = false;
+      }
     },
     filterProducts() {
-      this.filteredProducts = this.filterItems;
-    },
+      this.filteredProducts = this.products.filter(product => {
+        const matchesCategory = this.selectedCategory === '' || product.category === this.selectedCategory;
+        const matchesSearch = product.title.toLowerCase().includes(this.searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+    }
+  }));
+});
 
-    searchProducts() {
-      this.filteredProducts ();
-  }
-    
-}));
-    
-
-}
-)
-Alpine.start()
+Alpine.start();
