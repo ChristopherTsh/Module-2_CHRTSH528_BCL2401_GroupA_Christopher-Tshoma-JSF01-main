@@ -101,38 +101,29 @@
       class="grid lg:flex gap-y-4 gap-x-48 lg:items-start mt-3 mx-auto justify-center"
     >
       <!-- search section-->
+       <div x-data="productApp" x-init="init()">
       <form @submit.prevent="searchProducts">
-        <div x-data="productSearch()" x-init="init()" class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
+        <div  class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
           <button
           type="button"
             class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200"
           >
-            <svg
-              class="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
+          <select x-model="selectedCategory" @change="filterProducts" class="inline-flex w-full px-4 py-2 hover:bg-gray-100" @click="search = ''">
+            <option value="">All Categories</option>
+            <template x-for="category in categories" :key="category">
+              <option :value="category" x-text="category"></option>
+          </template>
+          </select>
+           
           </button>
           <div
             class="z-10 absolute top-[100%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
           >
             <ul class="py-2 text-sm text-gray-700">
-              <li class="inline-flex w-full px-4 py-2 hover:bg-gray-100">
-                All categories
-              </li>
+             
               <li>
-                <button class="inline-flex w-full px-4 py-2 hover:bg-gray-100">
-                  name
+                <button class="inline-flex w-full px-4 py-2 hover:bg-gray-100" @click="search = 'Electronics'">
+                  Electronics
                 </button>
               </li>
             </ul>
@@ -141,7 +132,7 @@
             <input x-model="search" placeholder="search"
               class="p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             />
-            <button
+            <button @click="filterProducts"
             type="submit"
               class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
             >
@@ -163,7 +154,7 @@
               <span class="sr-only">Search</span>
             </button>
             <div x-show="search" class="absolute bg-white shadow-lg rounded-lg mt-2 w-full z-10">
-            <template x-for="product in filterItems" :key="product.id">
+            <template x-for="product in filteredProducts" :key="product.id">
               <div class="flex flex-col items-center justify-center bg-gray-300 rounded dark:bg-gray-700 p-4 hover:shadow-lg transition-shadow">
                 <img :src="product.image" alt="Product Image" class="w-40 h-40 object-cover mb-4 rounded">
                 <h2 class="text-lg font-semibold mb-2" x-text="product.title"></h2>
@@ -175,6 +166,7 @@
           </div>
         </div>
       </form>
+    </div>
 
       <!-- sort section -->
        <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">

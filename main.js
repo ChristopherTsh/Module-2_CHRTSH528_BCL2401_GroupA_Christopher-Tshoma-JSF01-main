@@ -26,8 +26,9 @@ document.addEventListener('alpine:init', () => {
       if(!this.search){
         return this.products;
       }
+      if(this.search ==='category A')
       return this.products.filter(product =>
-        product.category.toLowerCase().include(this.search.toLowerCase)
+        product.category.toLowerCase() === 'category'
       );
     },
 
