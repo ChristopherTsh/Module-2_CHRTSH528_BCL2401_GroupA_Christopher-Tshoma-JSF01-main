@@ -7,7 +7,8 @@ export async function fetchProducts(){
           id: product.id,
           title: product.title,
           price: product.price,
-          rating: product.rating
+          rating: product.rating,
+          category: product.category
         }));
       } catch (error) {
         console.log('Error fetching products', error)

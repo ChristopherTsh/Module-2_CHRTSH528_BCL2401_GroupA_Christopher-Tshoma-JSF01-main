@@ -26,7 +26,7 @@ document.addEventListener('alpine:init', () => {
         return this.products;
       }
       return this.products.filter(product =>
-        product.title.toLowerCase().include(this.search.toLowerCase)
+        product.category.toLowerCase().include(this.search.toLowerCase)
       );
     }
     
