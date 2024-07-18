@@ -10,11 +10,16 @@ document.addEventListener('alpine:init', () => {
     filteredProducts: [],
     products: [],
     loading: true,
+    selectedCategory: '',
+    categories: [],
+
+    
 
     async init() {
         this.loading = true;
         try {
             this.products = await fetchProducts();
+            this.categories = await fetchCategories();
             this.filteredProducts = this.products;
         } catch (error) {
             console.error('Failed to fetch products', error);
@@ -23,17 +28,18 @@ document.addEventListener('alpine:init', () => {
         }
     },
     get filterItems(){
-      if(!this.search){
-        return this.products;
-      }
-      if(this.search ==='category A')
-      return this.products.filter(product =>
-        product.category.toLowerCase() === 'category'
-      );
+      return this.products.filter(product => {
+        const matchesCategory = this.selectedCategory === '' || product.category === this.selectedCategory;
+        const matchesSearch = this.search === '' || product.title.toLowerCase().includes(this.search.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
+    },
+    filterProducts() {
+      this.filteredProducts = this.filterItems;
     },
 
     searchProducts() {
-      this.filteredProducts = this.filterItems;
+      this.filteredProducts ();
   }
     
 }));
