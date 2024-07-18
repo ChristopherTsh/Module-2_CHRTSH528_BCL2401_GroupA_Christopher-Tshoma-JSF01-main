@@ -97,12 +97,12 @@
     </header>
 
     <!-- div to style search and sort section -->
-    <div
+    <!-- <div
       class="grid lg:flex gap-y-4 gap-x-48 lg:items-start mt-3 mx-auto justify-center"
-    >
+    > -->
       <!-- search section-->
       <div x-data="productApp()" x-init="init()" class="container mx-auto">
-        <div class="mb-4">
+        <div class="grid lg:flex gap-y-4 gap-x-48 lg:items-start mt-3 mb-3 mx-auto justify-center">
             <div class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
                 <select x-model="selectedCategory" @change="filterProducts" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200">
                     <option value="">All Categories</option>
@@ -118,6 +118,20 @@
                     <span class="sr-only">Search</span>
                 </button>
             </div>
+        
+
+        <!-- sort section -->
+       <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
+        <label htmlFor="sort" class="w-20 my-auto font-semibold">
+          Sort by:
+        </label>
+        <select class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+        >
+          <option value="default">Default</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+        </select>
+      </div>
         </div>
 
         <div class="bg-gray-100 p-6">
@@ -139,7 +153,7 @@
     </div>
 
       <!-- sort section -->
-       <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
+       <!-- <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
         <label htmlFor="sort" class="w-20 my-auto font-semibold">
           Sort by:
         </label>
@@ -149,10 +163,10 @@
           <option value="low">Price: Low to High</option>
           <option value="high">Price: High to Low</option>
         </select>
-      </div>
-       </div>
+      </div> -->
+       <!-- </div> -->
        <!-- card section -->
-       <div class="bg-gray-100 p-6">
+       <!-- <div class="bg-gray-100 p-6">
         <div x-data="productApp()" class="container mx-auto ">
          <div x-show="loading" class="text-center text-xl">Loading</div>
          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -168,7 +182,7 @@
          </template>
          </div>
      </div>
-    </div>
+    </div> -->
     </div>
     <script type="module" src="/main.js"></script>
   </body>
