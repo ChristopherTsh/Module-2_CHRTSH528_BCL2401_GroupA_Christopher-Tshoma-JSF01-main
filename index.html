@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="https://vitejs.dev/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <title>SwiftCart</title>
   </head>
 
@@ -12,7 +15,8 @@
     <!-- header section -->
     <header class="sticky z-50 top-0">
       <nav class="bg-gray-500 border-gray-200">
-        <div :type="text"
+        <div
+          :type="text"
           class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
         >
           <button class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -58,10 +62,10 @@
               </li>
               <li class="hidden lg:block md:block relative">
                 <div class="t-0 absolute left-3 -top-4">
-                  <p
+                  <p x-data="{ cartCount: 0}" x-text="cartCount"
                     class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white"
                   >
-                    2
+                    
                   </p>
                 </div>
                 <svg
@@ -85,48 +89,89 @@
               >
                 Cart
               </li>
-              <div 
+              <div
                 class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
               >
-              <div x-data="{ loggedIn: false, modalIsOpen: false }">
-                <!-- Toggle button for login/logout -->
-                <li 
-                    @click="loggedIn = !loggedIn; modalIsOpen = loggedIn" 
-                    x-text="loggedIn ? 'Logout' : 'LogIn'">
-                </li>
-              
-                <!-- Modal -->
-                <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen" @keydown.esc.window="modalIsOpen = false" @click.self="modalIsOpen = false" class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8" role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
-                  <div x-show="modalIsOpen" x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100" class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-xl border border-slate-300 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                    <div class="flex items-center justify-between border-b border-slate-300 bg-slate-100/60 p-4 dark:border-slate-700 dark:bg-slate-900/20">
-                      <div class="flex flex-col h-150 w-96 bg-gradient-to-b from-[#063970] to-blue-200">
-                        <div class="p-4">
-                          <div class="text-center mb-4">
-                            <h6 class="font-semibold text-[#063970] text-xl">Login</h6>
-                          </div>
-                          <form class="space-y-5" method="POST">
-                            <div>
-                              <input id="email" type="email" class="block w-full py-3 px-3 mt-2 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md" />
+                <div x-data="{ loggedIn: false, modalIsOpen: false }">
+                  <!-- Toggle button for login/logout -->
+                  <li
+                    @click="loggedIn = !loggedIn; modalIsOpen = loggedIn"
+                    x-text="loggedIn ? 'Logout' : 'LogIn'"
+                  ></li>
+
+                  <!-- Modal -->
+                  <div
+                    x-cloak
+                    x-show="modalIsOpen"
+                    x-transition.opacity.duration.200ms
+                    x-trap.inert.noscroll="modalIsOpen"
+                    @keydown.esc.window="modalIsOpen = false"
+                    @click.self="modalIsOpen = false"
+                    class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="defaultModalTitle"
+                  >
+                    <div
+                      x-show="modalIsOpen"
+                      x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                      x-transition:enter-start="opacity-0 scale-50"
+                      x-transition:enter-end="opacity-100 scale-100"
+                      class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-xl border border-slate-300 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                    >
+                      <div
+                        class="flex items-center justify-between border-b border-slate-300 bg-slate-100/60 p-4 dark:border-slate-700 dark:bg-slate-900/20"
+                      >
+                        <div
+                          class="flex flex-col h-150 w-96 bg-gradient-to-b from-[#063970] to-blue-200"
+                        >
+                          <div class="p-4">
+                            <div class="text-center mb-4">
+                              <h6 class="font-semibold text-[#063970] text-xl">
+                                Login
+                              </h6>
                             </div>
-                            <div class="relative w-full">
-                              <input :type="showPass ? 'password' : 'text'" id="password" class="block w-full py-3 px-3 mt-2 mb-4 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md" />
-                              <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-                                <p class="font-semibold" @click="showPass = !showPass" x-text="showPass ? 'Show' : 'Hide'">Show</p>
+                            <form class="space-y-5" method="POST">
+                              <div>
+                                <input
+                                  id="email"
+                                  type="email"
+                                  class="block w-full py-3 px-3 mt-2 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md"
+                                />
                               </div>
-                            </div>
-                            <button type="submit" @click.prevent="modalIsOpen = false" class="w-full py-3 mt-10 bg-[#063970] rounded-md font-medium text-white uppercase focus:outline-none hover:shadow-none">
-                              Login
-                            </button>
-                          </form>
+                              <div class="relative w-full">
+                                <input
+                                  :type="showPass ? 'password' : 'text'"
+                                  id="password"
+                                  class="block w-full py-3 px-3 mt-2 mb-4 text-gray-800 appearance-none border-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200 rounded-md"
+                                />
+                                <div
+                                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                                >
+                                  <p
+                                    class="font-semibold"
+                                    @click="showPass = !showPass"
+                                    x-text="showPass ? 'Show' : 'Hide'"
+                                  >
+                                    Show
+                                  </p>
+                                </div>
+                              </div>
+                              <button
+                                type="submit"
+                                @click.prevent="modalIsOpen = false"
+                                class="w-full py-3 mt-10 bg-[#063970] rounded-md font-medium text-white uppercase focus:outline-none hover:shadow-none"
+                              >
+                                Login
+                              </button>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              </div>
-            </div>
             </ul>
           </div>
         </div>
@@ -137,89 +182,188 @@
     <!-- <div
       class="grid lg:flex gap-y-4 gap-x-48 lg:items-start mt-3 mx-auto justify-center"
     > -->
-      <!-- search section-->
-      <div x-data="productApp()" x-init="init()" class="container mx-auto">
-        <div class="grid lg:flex gap-y-4 gap-x-48 lg:items-start mt-3 mb-3 mx-auto justify-center">
-            <div class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
-                <select x-model="selectedCategory" @change="filterProducts" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200">
-                    <option value="">All Categories</option>
-                    <template x-for="category in categories" :key="category">
-                        <option :value="category" x-text="category"></option>
-                    </template>
-                </select>
-                <input x-model="searchQuery" @input="filterProducts" placeholder="Search products..." class="p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                <button @click="filterProducts" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                    <span class="sr-only">Search</span>
-                </button>
-            </div>
-        
+    <!-- search section-->
+    <div x-data="productApp()" x-init="init()" class="container mx-auto">
+      <div
+        class="grid lg:flex gap-y-4 gap-x-48 lg:items-start mt-3 mb-3 mx-auto justify-center"
+      >
+        <div class="flex lg:w-[31.25rem] sm:w-[95%] md:w-full relative">
+          <select
+            x-model="selectedCategory"
+            @change="filterProducts"
+            class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200"
+          >
+            <option value="">All Categories</option>
+            <template x-for="category in categories" :key="category">
+              <option :value="category" x-text="category"></option>
+            </template>
+          </select>
+          <input
+            x-model="searchQuery"
+            @input="filterProducts"
+            placeholder="Search products..."
+            class="p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <button
+            @click="filterProducts"
+            class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+          >
+            <svg
+              class="w-4 h-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+            <span class="sr-only">Search</span>
+          </button>
+        </div>
 
         <!-- sort section -->
-       <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
-        <label htmlFor="sort" class="w-20 my-auto font-semibold">
-          Sort by:
-        </label>
-        <select class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-        >
-          <option value="default">Default</option>
-          <option value="low">Price: Low to High</option>
-          <option value="high">Price: High to Low</option>
-        </select>
+        <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
+          <label htmlFor="sort" class="w-20 my-auto font-semibold">
+            Sort by:
+          </label>
+          <select
+            class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="default">Default</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+          </select>
+        </div>
       </div>
-        </div>
 
-        <div class="bg-gray-100 p-6">
-            <div class="container mx-auto">
-                <div x-show="loading" class="text-center text-xl">Loading...</div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <template x-for="product in filteredProducts" :key="product.id">
-                        <div class="flex flex-col items-center justify-center bg-gray-300 rounded dark:bg-gray-700 p-4 hover:shadow-lg transition-shadow">
-                            <img :src="product.image" alt="Product Image" class="w-40 h-40 object-cover mb-4 rounded">
-                            <h2 class="text-lg font-semibold mb-2" x-text="product.title"></h2>
-                            <p class="text-gray-800 mb-2">Price: $<span x-text="product.price"></span></p>
-                            <p class="text-gray-600">Rating: <span x-text="product.rating"></span></p>
-                            <div x-data="{modalIsOpen: false}">
-                            <button @click="modalIsOpen = true " class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">View Product</button>
-                            <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen" @keydown.esc.window="modalIsOpen = false" @click.self="modalIsOpen = false" class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8" role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
-                              <!-- Modal Dialog -->
-                              <div x-show="modalIsOpen" x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100" class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-xl border border-slate-300 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                                  <!-- Dialog Header -->
-                                  <div class="flex items-center justify-between border-b border-slate-300 bg-slate-100/60 p-4 dark:border-slate-700 dark:bg-slate-900/20">
-                                    <h2 class="text-lg font-semibold mb-2" x-text="product.title"></h2>
-                                      <button @click="modalIsOpen = false" aria-label="close modal">
-                                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1.4" class="w-5 h-5">
-                                              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                                          </svg>
-                                      </button>
-                                  </div>
-                                  <!-- Dialog Body -->
-                                  <div class="px-4 py-8"> 
-                                    <img :src="product.image" alt="Product Image" class="w-40 h-40 object-cover mb-4 rounded">
-                                    
-                                    <p class="text-gray-800 mb-2">Price: $<span x-text="product.price"></span></p>
-                                    <p class="text-gray-600">Description: <span x-text="product.description"></span></p>
-                                  </div>
-                                  <!-- Dialog Footer -->
-                                  <div class="flex flex-col-reverse justify-between gap-2 border-t border-slate-300 bg-slate-100/60 p-4 dark:border-slate-700 dark:bg-slate-900/20 sm:flex-row sm:items-center md:justify-end">
-                                      
-                                      <button @click="modalIsOpen = false" type="button" class="cursor-pointer whitespace-nowrap rounded-xl bg-blue-700 px-4 py-2 text-center text-sm font-medium tracking-wide text-slate-100 transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 active:opacity-100 active:outline-offset-0 dark:bg-blue-600 dark:text-slate-100 dark:focus-visible:outline-blue-600">Add to cart</button>
-                                  </div>
-                              </div>
-                          </div>
-                          </div>
-                        </div>
-                    </template>
+      <div class="bg-gray-100 p-6">
+        <div class="container mx-auto">
+          <div x-show="loading" class="text-center text-xl">Loading...</div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          >
+            <template x-for="product in filteredProducts" :key="product.id">
+              <div
+                class="flex flex-col items-center justify-center bg-gray-300 rounded dark:bg-gray-700 p-4 hover:shadow-lg transition-shadow"
+              >
+                <img
+                  :src="product.image"
+                  alt="Product Image"
+                  class="w-40 h-40 object-cover mb-4 rounded"
+                />
+                <h2
+                  class="text-lg font-semibold mb-2"
+                  x-text="product.title"
+                ></h2>
+                <p class="text-gray-800 mb-2">
+                  Price: $<span x-text="product.price"></span>
+                </p>
+                <p class="text-gray-600">
+                  Rating: <span x-text="product.rating"></span>
+                </p>
+                <div x-data="{modalIsOpen: false, cartCount: 0}" @add-to-cart.window="cartCount++">
+                  <button
+                    @click="modalIsOpen = true "
+                    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    View Product
+                  </button>
+                  <div
+                    x-cloak
+                    x-show="modalIsOpen"
+                    x-transition.opacity.duration.200ms
+                    x-trap.inert.noscroll="modalIsOpen"
+                    @keydown.esc.window="modalIsOpen = false"
+                    @click.self="modalIsOpen = false"
+                    class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="defaultModalTitle"
+                  >
+                    <!-- Modal Dialog -->
+                    <div 
+                      x-show="modalIsOpen"
+                      x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                      x-transition:enter-start="opacity-0 scale-50"
+                      x-transition:enter-end="opacity-100 scale-100"
+                      class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-xl border border-slate-300 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                    >
+                      <!-- Dialog Header -->
+                      <div
+                        class="flex items-center justify-between border-b border-slate-300 bg-slate-100/60 p-4 dark:border-slate-700 dark:bg-slate-900/20"
+                      >
+                        <h2
+                          class="text-lg font-semibold mb-2"
+                          x-text="product.title"
+                        ></h2>
+                        <button
+                          @click="modalIsOpen = false"
+                          aria-label="close modal"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            stroke="currentColor"
+                            fill="none"
+                            stroke-width="1.4"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <!-- Dialog Body -->
+                      <div class="px-4 py-8">
+                        <img
+                          :src="product.image"
+                          alt="Product Image"
+                          class="w-40 h-40 object-cover mb-4 rounded"
+                        />
+
+                        <p class="text-gray-800 mb-2">
+                          Price: $<span x-text="product.price"></span>
+                        </p>
+                        <p class="text-gray-600">
+                          Description:
+                          <span x-text="product.description"></span>
+                        </p>
+                      </div>
+                      <!-- Dialog Footer -->
+                      <div
+                        class="flex flex-col-reverse justify-between gap-2 border-t border-slate-300 bg-slate-100/60 p-4 dark:border-slate-700 dark:bg-slate-900/20 sm:flex-row sm:items-center md:justify-end"
+                      >
+                        <button
+                          @click="modalIsOpen = false; $dispatch('add-to-cart')"
+                          type="button"
+                          class="cursor-pointer whitespace-nowrap rounded-xl bg-blue-700 px-4 py-2 text-center text-sm font-medium tracking-wide text-slate-100 transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 active:opacity-100 active:outline-offset-0 dark:bg-blue-600 dark:text-slate-100 dark:focus-visible:outline-blue-600"
+                        >
+                          Add to cart
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+            </template>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- component -->
-<!-- This is an example component -->
-<!-- 
+    <!-- This is an example component -->
+    <!-- 
 <div class="flex flex-col h-screen bg-gradient-to-b from-[#063970] to-blue-200">
        <div class="grid place-items-center mx-2 my-20 sm:my-auto" x-data="{ showPass: true }">
            <div class="w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12
@@ -256,8 +400,8 @@
    </div>
 </div> -->
 
-      <!-- sort section -->
-       <!-- <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
+    <!-- sort section -->
+    <!-- <div class="flex sm:w-[95%] max-w-[21rem] md:w-full">
         <label htmlFor="sort" class="w-20 my-auto font-semibold">
           Sort by:
         </label>
@@ -268,9 +412,9 @@
           <option value="high">Price: High to Low</option>
         </select>
       </div> -->
-       <!-- </div> -->
-       <!-- card section -->
-       <!-- <div class="bg-gray-100 p-6">
+    <!-- </div> -->
+    <!-- card section -->
+    <!-- <div class="bg-gray-100 p-6">
         <div x-data="productApp()" class="container mx-auto ">
          <div x-show="loading" class="text-center text-xl">Loading</div>
          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -287,7 +431,7 @@
          </div>
      </div>
     </div> -->
-    </div>
+    <!-- </div> -->
     <script type="module" src="/main.js"></script>
   </body>
 </html>
