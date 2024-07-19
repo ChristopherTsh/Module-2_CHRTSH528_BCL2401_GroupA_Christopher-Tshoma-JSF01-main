@@ -31,7 +31,12 @@ document.addEventListener('alpine:init', () => {
         const matchesSearch = product.title.toLowerCase().includes(this.searchQuery.toLowerCase());
         return matchesCategory && matchesSearch;
       });
+    },
+
+    addToCart(){
+      
     }
+
   }));
 });
 
