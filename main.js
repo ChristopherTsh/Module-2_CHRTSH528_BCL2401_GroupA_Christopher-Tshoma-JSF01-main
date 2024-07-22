@@ -15,8 +15,15 @@ document.addEventListener('alpine:init', () => {
     sortOrder: '',
     cartCount: 0, 
     cart:[],
+    shippingCost: 50,
+
+
     get cartCount() {
       return this.cart.length;
+    },
+
+    get cartTotal() {
+      return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0) + this.shippingCost;
     },
     
 
@@ -41,16 +48,35 @@ document.addEventListener('alpine:init', () => {
 
       this.sortProducts();
     },
-    // sortProducts() {
-    //   if (this.sortOrder === 'price-asc') {
-    //     this.filteredProducts.sort((a, b) => a.price - b.price);
-    //   } else if (this.sortOrder === 'price-desc') {
-    //     this.filteredProducts.sort((a, b) => b.price - a.price);
-    //   }
-    // },
+    sortProducts() {
+      if (this.sortOrder === 'low') {
+        this.filteredProducts.sort((a, b) => a.price - b.price);
+      } else if (this.sortOrder === 'high') {
+        this.filteredProducts.sort((a, b) => b.price - a.price);
+      }
+    },
 
-    addToCart(product){
-      this.cart.push(product);
+    addToCart(product) {
+      const existingProduct = this.cart.find(item => item.id === product.id);
+      if (existingProduct) {
+        existingProduct.quantity++;
+      } else {
+        this.cart.push({ ...product, quantity: 1 });
+      }
+    },
+    
+    removeFromCart(product) {
+      this.cart = this.cart.filter(item => item.id !== product.id);
+    },
+
+    updateQuantity(product, quantity) {
+      const existingProduct = this.cart.find(item => item.id === product.id);
+      if (existingProduct) {
+        existingProduct.quantity = parseInt(quantity);
+        if (existingProduct.quantity <= 0) {
+          this.removeFromCart(existingProduct);
+        }
+      }
     }
 
   }));
