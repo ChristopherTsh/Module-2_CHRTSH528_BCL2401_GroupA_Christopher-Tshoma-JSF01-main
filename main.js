@@ -12,6 +12,8 @@ document.addEventListener('alpine:init', () => {
     selectedCategory: '',
     searchQuery: '',
     loading: true,
+    sortOrder: '',
+    cartCount: 0, 
 
     async init() {
       this.loading = true;
@@ -31,10 +33,19 @@ document.addEventListener('alpine:init', () => {
         const matchesSearch = product.title.toLowerCase().includes(this.searchQuery.toLowerCase());
         return matchesCategory && matchesSearch;
       });
+
+      this.sortProducts();
+    },
+    sortProducts() {
+      if (this.sortOrder === 'price-asc') {
+        this.filteredProducts.sort((a, b) => a.price - b.price);
+      } else if (this.sortOrder === 'price-desc') {
+        this.filteredProducts.sort((a, b) => b.price - a.price);
+      }
     },
 
     addToCart(){
-      
+      this.cartCount++
     }
 
   }));
