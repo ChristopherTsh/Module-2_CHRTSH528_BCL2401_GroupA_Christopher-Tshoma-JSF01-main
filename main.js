@@ -6,7 +6,8 @@ import { fetchProducts, fetchCategories } from './Api.js';
 window.Alpine = Alpine;
 Alpine.plugin(focus)
 
-document.addEventListener('alpine:init', () => {
+document.addEventListener('alpine:init', /** Description placeholder */
+() => {
   Alpine.data('productApp', () => ({
     products: [],
     filteredProducts: [],
