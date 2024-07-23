@@ -41,7 +41,7 @@ document.addEventListener('alpine:init', () => {
     },
     filterProducts() {
       this.filteredProducts = this.products.filter(product => {
-        const matchesCategory = this.selectedCategory === '' || product.category === this.selectedCategory;
+        const matchesCategory = this.selectedCategory === '' || product.category ===   this.selectedCategory;
         const matchesSearch = product.title.toLowerCase().includes(this.searchQuery.toLowerCase());
         return matchesCategory && matchesSearch;
       });
