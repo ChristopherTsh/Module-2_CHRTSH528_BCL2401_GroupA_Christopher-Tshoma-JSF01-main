@@ -7,7 +7,7 @@
     <title>SwiftCart</title>
   </head>
 
-  <body x-data="{...productApp, slideOverOpen: false}" x-init="init">
+  <body x-data="productApp" x-init="init">
     <!-- header section -->
     <header class="sticky z-50 top-0">
       <nav class="bg-gray-500 border-gray-200">
@@ -400,6 +400,7 @@
       <div class="bg-gray-100 p-6">
         <div class="container mx-auto">
           <div x-show="loading" class="text-center text-xl">Loading...</div>
+
           <div
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           >
@@ -522,7 +523,10 @@
                             </svg>
                           </template>
                         </div>
-                        <p x-text="product.category" class="text-gray-500 mb-2"></p>
+                        <p
+                          x-text="product.category"
+                          class="text-gray-500 mb-2"
+                        ></p>
                         <p class="text-gray-600">
                           Description:
                           <span x-text="product.description"></span>
