@@ -7,7 +7,7 @@
     <title>SwiftCart</title>
   </head>
 
-  <body x-data="productApp" x-init="init">
+  <body x-data="{...productApp, slideOverOpen: false}" x-init="init">
     <!-- header section -->
     <header class="sticky z-50 top-0">
       <nav class="bg-gray-500 border-gray-200">

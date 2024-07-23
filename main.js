@@ -1,8 +1,10 @@
 import './style.css';
 import Alpine from 'alpinejs';
+import focus from '@alpinejs/focus'
 import { fetchProducts, fetchCategories } from './Api.js';
 
 window.Alpine = Alpine;
+Alpine.plugin(focus)
 
 document.addEventListener('alpine:init', () => {
   Alpine.data('productApp', () => ({
@@ -18,8 +20,9 @@ document.addEventListener('alpine:init', () => {
     shippingCost: 50,
 
 
-    get cartCount() {
-      return this.cart.length;
+    setCartCount() {
+      this.cartCount = this.cart.length
+      return this.cartCount;
     },
 
     get cartTotal() {
@@ -63,6 +66,8 @@ document.addEventListener('alpine:init', () => {
       } else {
         this.cart.push({ ...product, quantity: 1 });
       }
+
+      this.setCartCount()
     },
     
     removeFromCart(product) {
